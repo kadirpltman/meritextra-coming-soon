@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coming Soon</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+  }
+  h1 {
+    font-weight: 200;
+    font-size: clamp(2.5rem, 9vw, 6.5rem);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-align: center;
+    padding-left: 0.28em; /* balances trailing letter-spacing */
+  }
+  footer {
+    padding: 0 24px 44px;
+    text-align: center;
+    font-weight: 300;
+    font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #9a9a9a;
+    padding-left: calc(24px + 0.4em);
+  }
+  footer::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: #444;
+    margin: 0 auto 22px;
+    margin-left: calc(50% - 24px - 0.2em);
+  }
+</style>
+</head>
+<body>
+  <main>
+    <h1>Coming Soon</h1>
+  </main>
+  <footer>Energy Management Services</footer>
+</body>
+</html>
