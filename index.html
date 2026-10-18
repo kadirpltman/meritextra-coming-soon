@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coming Soon</title>
-<meta name="description" content="Energy Management Services. Coming soon.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merit Extra | Coming Soon</title>
 <meta name="theme-color" content="#000000">
+<meta name="description" content="Merit Extra. Coming soon. Energy Management Services.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300&display=swap" rel="stylesheet">
@@ -13,6 +13,7 @@
   :root {
     --bg: #000;
     --ink: #eaf9ff;
+    --cyan: #9ceaff;
     --muted: #8795aa;
     --font: "Sora", "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
     color-scheme: dark;
@@ -20,8 +21,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: var(--bg); }
   body {
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100%;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
     font-family: var(--font);
     color: var(--ink);
     overflow: hidden;
@@ -30,24 +32,21 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Turkey: glowing border, current on the grid, arcs */
-  #map, #still {
+  /* Globe: still layer (rim, glow) under a live layer (coastlines, grid, current, arcs) */
+  #still, #globe {
     position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
     z-index: 0;
     opacity: 0;
+    pointer-events: none;
     animation: fade 3.2s ease-out 0.3s forwards;
   }
 
-  /* A little shade behind the heading so it stays crisp over the arcs */
   .shade {
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: radial-gradient(ellipse 34% 24% at 50% 46%, rgba(0,0,0,0.5), rgba(0,0,0,0) 78%);
+    background: radial-gradient(ellipse 30% 20% at 50% 46%, rgba(0,0,0,0.7), rgba(0,0,0,0) 80%);
   }
 
   main {
@@ -56,20 +55,19 @@
     flex: 1;
     display: grid;
     place-items: center;
-    padding: 0 24px;
   }
   .stage {
     position: relative;
     display: grid;
-    place-items: center;
+    justify-items: center;
+    gap: clamp(10px, 2.2vmin, 30px);
   }
 
-  /* Static soft glow behind the heading (fades in with it, then holds) */
   .glow {
     position: absolute;
     inset: 0;
     margin: auto;
-    width: min(40vmin, 500px);
+    width: min(46vmin, 560px);
     aspect-ratio: 1;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(61,150,255,0.16), rgba(61,150,255,0) 62%);
@@ -78,11 +76,11 @@
     animation: fade 4s ease-out 0.8s forwards;
   }
 
-  /* Fades up out of the dark once, then stays completely still */
+  /* Both lines fade up out of the dark once, then stay completely still */
   h1 {
     position: relative;
     font-weight: 200;
-    font-size: clamp(1.4rem, 6vmin, 5.5rem);
+    font-size: clamp(2rem, 8.4vmin, 7.4rem);
     line-height: 1.05;
     letter-spacing: 0.04em;
     text-align: center;
@@ -107,6 +105,19 @@
     filter: blur(22px);
     opacity: 0.55;
   }
+  .sub {
+    position: relative;
+    font-weight: 300;
+    font-size: clamp(0.9rem, 2.7vmin, 2.3rem);
+    letter-spacing: 0.38em;
+    text-indent: 0.38em;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--cyan);
+    text-shadow: 0 0 20px rgba(77,190,255,0.45);
+    opacity: 0;
+    animation: fade 2.4s ease-out 2.8s forwards;
+  }
 
   footer {
     position: relative;
@@ -114,9 +125,9 @@
     display: grid;
     justify-items: center;
     gap: clamp(14px, 2.4vmin, 30px);
-    padding: 0 24px calc(clamp(28px, 5vmin, 72px) + env(safe-area-inset-bottom));
+    padding-bottom: calc(clamp(28px, 5vmin, 72px) + env(safe-area-inset-bottom, 0px));
     opacity: 0;
-    animation: fade 2.4s ease-out 3.4s forwards;
+    animation: fade 2.4s ease-out 3.6s forwards;
   }
   .line {
     width: min(26vmin, 360px);
@@ -152,27 +163,28 @@
 </style>
 </head>
 <body>
-  <canvas id="still" aria-hidden="true"></canvas>
-  <canvas id="map" aria-hidden="true"></canvas>
-  <div class="shade" aria-hidden="true"></div>
+<canvas id="still" aria-hidden="true"></canvas>
+<canvas id="globe" aria-hidden="true"></canvas>
+<div class="shade" aria-hidden="true"></div>
 
-  <main>
-    <div class="stage">
-      <div class="glow" aria-hidden="true"></div>
-      <h1 data-text="Coming Soon">Coming Soon</h1>
-    </div>
-  </main>
+<main>
+  <div class="stage">
+    <div class="glow" aria-hidden="true"></div>
+    <h1 data-text="Merit Extra">Merit Extra</h1>
+    <p class="sub">Coming Soon</p>
+  </div>
+</main>
 
-  <footer>
-    <div class="line" aria-hidden="true"></div>
-    <p>Energy Management Services</p>
-  </footer>
+<footer>
+  <div class="line" aria-hidden="true"></div>
+  <p>Energy Management Services</p>
+</footer>
 
 <script>
 (function () {
-  /* Turkey's border, from Natural Earth 1:10m data. Compact delta encoding on a 2000 x 844 grid. */
+  /* World coastlines, Natural Earth 1:50m land, simplified to 0.16 degrees. Compact delta encoding on a 0.1 degree grid. */
   var AL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-  var DATA = "~9BiFfihohgkgjhnnhqmqfrclgibkdifideghahcjfhmlbpopgjegknehagdghjkiohrmrhnbihrcngtolkjkgihhgjheijkhpthlUYZcZYdfUofoapfmekfkdiWjSbZhZfaijkhmfigjfjqngiclglbkhjhifiilmjgjcsgkdijhhiengmenfonijcjhhjfhcjZlfmdmchgjbicmalfjfidkhhpfkhjmigfkndkjjkeibjejkjfidlgnejfhmiikjehkljhifjbjehhmfidddeSdYkWoUjapYdZRgamZdWaaVaZebgbiZoZgchbccePfZcZgQVYhPWYhUkSbdcdfZhdjSzdjegLjfadchYedbbdddgadfcedbiamXnbh~fIgOCgYdGaMiMpTiIvTjVlIo~fJgLafPZGhYeYcRPacLZYeVjTmLoOjYiQpKcWhZeajbcfWaZbdWeKYfibnencofrbmipjjfhdjlhhggkgkegYgTecjadcdegghdkf2dgbddgekbfbgdjdsdgWYafeefaedYglUfddWUOebbaecfcjaiehbicgbnblXtXiZeOebVSbcbebgWqbiakShbgckfdeebkghhdhgfdhgfcgehiidhgVkejlZiebjcoYhZcefdhlhWdVncc~fdfrbeaggcZZWbfgcdagRldjSpRqWqejUnfqdhZhbrdfgbdYYcbldfhgcjZibjdlbYcfYndfgdWdYiZddiVgZdcgblPcXkZlRcUYafXadcZcaZcdeZcbZZdZdbdecZWXcfddYfdcdeafacbbcfXbccIVfcbd~fWf5OgceZbWmcmeqgidlhlgeeoZlbqfihifghgbkeihfbidkcifZdcdfUaVgdledeieefhYdefhffgYjXfciZgggbgfgifajdfhccgeedfakeccdecgggdZfgeifdeTeZbegeaegcfcjdcegYYdcZddcegfccfgecegdhefZcdiceXdgddahdfhefeebhbggkbehhfgedbYaXcdbalggbgfjefhkhcechhfhbjggbfedhefebcdgfbbdaecgdcchdbhadcgcdidbcfdgfibegdceeeechfdbehYhhhhfhgbkefYcfibefdjefebcdgdjhieijjgicdegeheeehgfXjaochdechghegdefeehcedanfheibedcihbccehcedgedjdefifgdkefhhfgefdcdibhieadedfbkeddhahddcieddhdddhacdgfeYgbjeoZdZffdXiehddafeccgebigiejZwegahekimfjcpekhlfihicdccfhedckdbahgfeedjfcdsgfigcedhgibfeefgcjhgeedocfecdMhdgghScbhYfXhdfehVdchdhacdfejccZfbachedekeaahfjchggafcSgcheiceedgedgggeighefbhgfihchggefijggefgijnaifgedgcWleeiicdefchdgbdeegbfeiciefhdfdeecfdhfdhbgbddfjcgcedeecgcjcccbgdjcfhhegZfchedegeddfgcfdheebgZcfdghZebfdhggdebYaSbgcqfobjbgXcZgdhcfbgdcXcgXfddddcedcXcXgcicZgcdbbadffaeeSgdoeefjdhcZfiefccebdfZadeficcfadidgYbadfcighbheddgbghhcfiehihggifgeedjflbfdcZjiicXZdgehdfgacZfgdQfclclgjisxgmagggejhggglshffdddeZhahegfgfjoheghldneoakfihnZedWgddcgWigeaYadbbmkgeedachYdebggeaegcadjdbYncidoiedidfggdedfgcajdgihfgedblchghegddehbfeddcicfdcchedZjYafZgbdfjcjdgefcZXWZdWUdhahffgegihfcuTeefbkegeedheldhYeabeYjdd~fbgGVlXedgdhdeThbdeckRjbgcfYcYhcfYfedfiXeahaiakhmbkZgahegbfbgcocmYkcsQsfjejhlgheoXrgncggilbgkkrmpgmdnhhdkhieibkchdYdcgfdcceccebajbifgehiiewhkhhhdiTmgjigoeoc3eufdgehjdkfpjqcidqhlirfgeiYifieecXbafaiaeWZZehbqZoY-drZhikcgdhejghjgfzbrelhhcecbeThbdXdGgahdfcbgefdddYhhefchgfecbdddgXaYZacfeefdahdjaiXddlXjcjgid~gogJ7j5fochcgfjckhjh~gigIkjoh6ejdqgoanXhTddgcmeibvZ2RrZkbsaqRoeibhhkaobieggjbiejgncxcnawavX2gnh1hhfigse~gjgEucoisgqcpZkXgblhheijegjikgjckifgXfdgcqjmnofgefikihkkpiolphjflbmevajbhfehdgghdkfhgfgZjamkgdmphjdthkmmjlpkgkighilhmclZiXhekgofnhvniihjgnpksfjgiimgjjjhiihglfidiYkaiihfhegghefohhmjijjd7nmdhgjjmdlhgenelbjdhfijjemYodjdtendkckgjhhgncnamgjkpmjgmdhhkgljjhqbonlfvZwUjglfmanclXmapgjcocnYmepXqcjbgZmZhdrjmefilhkjkbjakdnhkejfkejimfxmifnWiVkdkfvhekbjljjbijihjijmsplgdjZimglopdlflkgi ~j2gRiqYfelfikmhlkmehhjkjjlkkvp~g3gYrihdigjhdldhchijcoajfjefbeajXibeedPhcegacdgccbcejmfidicfXYUcYecdZgdePldhcmdgXeabXeIichdjcqdjVpbmVmdiZiYfZlWhWlZgXlejaieldgZlahYnWjgihiQrahdfgbhdiYjZhaebaagddegdidndgcpYmdmZldmfkYhgjehdhcbXTiYfUlZcahcdYhJfdedYfadakfiehciZkafdgeeehefdghhaihhfecmaccjdfbcedbfdhbcehbeagaedgdnetTkihfhcgZaMgZebdiUXgcXddcafdbhZjbqfkehbhYddlZtgkbjijcifheifiajehaieigjhlgjZlglkmoplllgeeegeeejdhgfdncjgmiieffeefakflhlf ~gqkwgeggemXbdcie ~gkkEfhdhIkUbhanZwakieogf ~jQjCkfihfhdgZhaiYcfcedhcghkd ~jPjcggfgXcfeibjhei";
+  var DATA = "~8IdebbigfdYfacdh ~2YeIlImgnYgQkagRjY3SgddenVhXidfjkbghhUpZtMeTkQYEbVTTaRZXcOLbVXYfieecVlgiacchjhdhRWVjUfVkZmenYniffhUdilbnbWXegijfgmjlepZVXbaYgcbgaijfclambgemApJdPZRfOYYW~fcf_LURgQmfnjeijfuZqduYpdnXqhghahgcohakdfjXul4gZlmzqmfwmyjsufpmmlUfkheghbjgirdbghjdgfiihjechlgdjjjgdifgkkdiklcmXeakkpcfhhgbjoqeijlidjkgdshfkZgchhg9VojdbifgdjjjcbWZegZaV6NndhbnbkgihlshpesgoigdjiihrjhiU ~73dSjYYdYhhl ~5qc2pZxQafPpYndi ~z9gIpnfabblaWiedkTYmcshmjjfW ~q0YVjgecqgddZfjeedWhcdeoig ~p6snWgxjqc ~pEshYgdi1d ~cCrFfdXdNfjj ~4-ejlejaVg ~yVhUy0jngX ~zJh0meedcaXbgrdi ~zPhbYmkignigidbWgZ ~zehxjeiWcgfbdhemcfel ~zkh9ichTagdmYlfh ~y3iHnbfacbWr ~4Ye9cdbhanek ~36fQYrPogg1Q ~1petXejnmhhc ~0SfjndhXVlcdZibdbhdcil ~z1fhibccXjfi ~zMeqNcThgimhwbkkhd ~yweinYbdRlhi ~yeetmfhbIcfkjgnchgbk ~yOeqfcYgklie ~yCeuidZbZl ~wkfvjXjeeaYidlYhjj ~jipKmeSZhici ~jYsSjfibrebexdKabfiiNenjQl ~pusoedVdNhjh ~naspscVhPbTh ~n3sptdCchdHg4hgi ~n3q0RaZigilh ~pdq7edYfTlkh ~rDrbXfkjrc ~xuroZcSilg ~2CrkZecing ~jvljxdgdkhecReTjfh ~jqmGmbkZOn ~lZlkZchcUbYjlj ~i_pCcegcXafm ~h-ouYVWolihcjjjf ~hqoshcddYi ~gfmOjebbYikiig ~NKUeidYcSeZgiiYh ~MRUjpbZetgkdhc~fegFdigg ~VqTfPlxekb ~W-V_igidVdhhbgghkg ~WIV7jeWdZgnj ~UfU-UbOfujjdhh ~USVHldcdUg ~QrUxedlhicjinfWctgfcad~fCgF0ijdrh ~UYUlcdiddeQjngbhigqe ~VYVdXccisogeccieac ~EDrMtbGdfk ~WzX_lcjhgcOaeikh ~aNXjndkaceMo ~UeZPZgjtkegcbbjc ~WlX9pgTXagnibgjgbh ~UXYVeWcihibabglqje ~UmZAbfgjke ~WWnrTgQmvd ~WdnLhgdcjgjkkcWbYgfkonfY ~FNp8qgwbVcUjXfei ~GDpcjegbaeSj ~GdomjcQccgjj ~T7i5qZYgccZhaj ~Vri4kfbbTffk ~IHpCkfhdYehdSahhbgedbjljjbel ~IMpIjeeeSeli ~Liordcdhbdhlih ~LIozjfpXbflcfaUlgiYhkgag ~LKo6jefdcggccfak ~K6o-jYeaXpcdfijh ~K9pGkejaajjZacar ~KzpGgdlfcdiegdYhccYl ~L6oReZfkahhi ~LRodkeccnjcXYfigbgck ~LaoUhcbfkdeejbSo ~WCnRxeadfdagfhZeXjjkec ~UrmalgSbXeji ~3vfVkffabcgbZeVYXfRlghtfikgamgnkem ~z5esMWVXXdgmup ~2qZosbyigSehdcfWYjbXWghhYjcmidYpem ~vFsrtcXdicde~fdf-JjshkhYfnh3i ~vRsiidcdoiucbaYfocad~fUgDXiUgyl ~wFsZaatischc~fEf7qnlfgiki ~14r2ndhjkg~gnf6RaTieghiZfdfgcob~fegAZcKkigfjuk ~2Orjqchb~fagCtk ~28ry~gof-VbQfJjij ~7FajpckUeanbfmlUrbmjkeZQXfcVXVYbYilmfkRnnkipcmifbhcjhefjaihaYohhddcibmig ~7DZjnjebkicdjgcchcUSZcedldfdUhhdVbbPUYZfYfWkYeghbfkichhhiediojklnhxps0lidd ~zshdicdbjbgVbcfZapcZiYbbekcdXkelhjajcbXjZXhomikkjcfbllifhjlffn ~y7i6mckheXiZbWacdZjUjcfhjhkahikccdiaiefbdiZgYofYXmacYhincidbcjctldh3 ~03f5legQiagikXjfopmhfiniyX~gvfxsVeZwZjcfbXdiZnZkVlggamddegdodbehdcdaiLiNzQkbdbihbbegdRfrZXaQgUpgiYcdhcchmbikgZiifYqggdfXnKjajhhWgcigjbXbddnXjmgkjkdhkPeblWhikrl ~zhgKaaZd~fggCbdeWlXjgkkjerihdfdagZYWcoVfYkagcXeecbffmYlhmbgbdgEXfdihsekZgemknhphhgdenlqiekjwaqgqnhd ~wyfEocjawejkwakXtehVSkNfJlUeOjfiTjhelo ~vFg0pfnUtWnVjceihgtQkegcbdmijdgcbdfbpbgXiceamhlYcEUifbB6YpZtUrZuWkYrPsem ~yQhDjhkadakhfbjgobdcXehZVcibYepSccrVadZibWgVYbdhgcaahZaTSZbpZcYldbWcdmRecwYkdjhjbnhmkkvZdhkqukptpjjffjkhnt ~qmr6~fAf3OYTegcXdfdafheWbIgajulngagojZhmeul-l~ghgB~gggGrc ~oprdqecbYcgcdcrXqbTffeEhcghhlfXhfhQfaihiphijcgngei ~2UogkReU~gPffYlWfaQpSdbelYgaXcljucnhngvakflgpmghkbj ~2em5odmjcZhbkgNaXWSlWcaidcoaTceqkjfipfjreohg ~2EmeifeYjbhWaVacfVbWiaaaZcimcgeZahbYekaaUfhhbeejcbjbZeZYZkilYhPaXfdabiXegjyq2hgdlgnqgmkgbbicqjqojnimbiijfjjkibjggibggh ~1AlXhegbaZZiXYcgekbeonidmj ~0glQkfdcjfgbYQdfbbgmdaahjtcjgaaeekidbiqm ~y6jicZZqflosliicaN ~xVjIgcWSZdXifnllth ~sghimbrKcWWbZhdldtjtie ~nveEjYkGdbckdfgVbYfU~fqe_acPbUkY5hpoub4krwkhdgjjihdilgdkidigmjfkjfnjj ~HJTiDgHkpkoe6Z ~VBTjRghk~gwgH ~Y8TswelYdcZehd~fBf6~fSgApmqfylchkmql2h1dnced ~WrTdebXdKgbhTeGj~g0gAjfaiqiodedke ~VDVMmbqSgWVY~fcf_chjg4gQfdgqhQiZcWgidadRjihmfhhmdfisfXgig2hkdfhShviKifmbhhiug ~VMXxlfjbcdrYqapdSc~fKgEqikdZjjkgbdfjcocihTknkXfchjicgkfji ~TOjozckaxalZrdfbnfmaWcFflkehWhZnYfNmZechjgehWfSXXekieiji ~jRsitdhjkgieddsh4dicPaEddghgBgohGhlgVgtfhgcgledi ~iosfpeebmhjdeeydeeocJcGNEo8jDebh~ghgEZgjhRdfiYecdheRdNnpfbffiXdam9gheeeTetcfinhuXamji ~hgmZhbdSafedbediglcqjflj ~hfmsgYbYbhdnmigi ~icl-aYhbdbEqijqd ~Xxq7ncOcZgjgUhghkfahjh ~MIn6wcmXncmYcdSjdgijYcbkZfjiVhehYffijffhZedi ~UwjFphpdibkfbdodibccZhOebYYlRfbdZjghvdkhakgiYj ~YQf-rebUVbYfcohl ~fhpJWagdddzgidXWYdleUdreobkWqZhaXgpbcbweeYTZpefdTb~fgf_becbahRctqqfmkWcMifhrlejZejivhbhilbfbkljLddhkkdjifdibcgiZWkuacbhjhgiekkhdhjhfi ~e4onqgjbddjeXaiUaZheKcfdWdXgkiYejiagvkUeplThkjcgdjvejjYgkjlhfcjjid ~D6qxoenaifbh8XecleeYkcihfcihbhgiahofkfecnhagrdrYoeXddcYhhcPhldackdWdmbagcdehbeOjYmIfakjjTdecjbZb~gAgn ~dlqWohacjeedjfedoedehbVZ~fXf2QhWiPefikemjZekiHi0gghYfmhEglfdinfafigcgihqcaijgZfhgubfccflbiiifikmcgilgmadkmdqhfhig ~6HT72dEbajjgeh ~vyVvYglhje ~NVUbbfhgehoe ~NxUaYgphhf ~gNVBeecikg ~fnU8jfYbXk ~bJTiihrcXeRhdgig ~ffU_dfihke ~cyUdgZYjXfsk ~VfTlTgnhle ~WRV8aeikje ~RwUkcfgicioffb ~oXsiSgpgme ~o7skecSfih ~UNYYdhilhZ ~VHXbreedlbTjdehddgZi ~oah-mfXcbh ~6DdsgbiifYcfdhel ~6Kdfjcbddkgh ~UWYacfcljg ~UnXpmcZcfhbeZk ~URYJcfgije ~UUX8ibdcbk ~U2XkjeecXgci ~UfZEcdhYcfamlk ~5HetmSZldl ~5ReYmbWhdj ~4qeufbdibfii ~EeZLcehddeehdg ~6RYrgdYdil ~1zdaceghig ~1Xd2hffaZggi ~0ZeLgeZfik ~0aeOmhhdaaaiej ~3IZyibdecj ~1gabkdYdWhni ~yxh6hdcfei ~zShefllsfW ~zehiadchkj ~zFh8ecehhj ~zVh7iaajccfm ~2_fsifddYfhh ~3nechfeddgdj ~0cgAkefcZihcYh ~1DfHfZcfdhfjji ~1BfAdbdffl ~zQfSdahdZbiqhh ~zKfLcfgkih ~zifvidVfgh ~zQf0idcdficcfj ~0hewdffikl ~z0ezccYfhi ~yLfZddejij ~w6fiedafglke ~vPgPjaebYn ~vgfubhelhf ~jlpMbebhkh ~pCsvneUcLh ~ojsr9cBeYh ~pKsqidcfRh ~hxsSnbViaj ~sIrTYfnime ~sbrXWhlhid ~1Prybfhjkd ~6cq4Rhlhpe ~5kpKdfjjnhfc ~4Xn3acdiok ~3ZnIcfihoj ~3OnFOWppjekh ~1jonieacagjj ~0DkLZZhljh ~zvlMegghlf ~uMjdcfgnib ~Hsi-cgelhlpX ~HjjRkebdci ~HWjXgdbfdiig ~7AoSleaebg ~FwoVUanmkf ~F-objfcdgfRbpidi ~ddkcbbdini ~dykacellfb ~mLfCfccigk ~oucrbfejjf ~hXgmhddbdg ~fGozafhhdg ~fzpdhedafibg ~e-pudegeai ~fCpIdbYdhgei ~fDo_fdjfdcWjji ~iJogcddihh ~gOmFdfghif ~T8kDdghlYijfjb ~UCj_kbeafk ~T3j3cbbihgfk ~TGjYZfhffi ~TvkLlfXdch ~WehlWfjhdjlghf ~LEo4ieaZgjci ~Lfongddfdi ~LXoxcdciii ~X6fyinhgfa ~RvgAkXcdbgjial ~Oekieddfgj ~SerGxfglTjlhpdSmiipdTi0kxgsWWalhccheddpidgignefcjechhirdWjugxcXYnjnefdWekfcakjlhcbkhkcehjhsdjcRbyiecUblgebnltgncOashddieljoaKc5dIdrfecRg5bcdgdmhdakijegcfhkgedqdecYgwdYbvhnbXfkdceYglbZfhdcdXiddjeebdcYifhccXmpkRcghbeWkcfgcYhmadeSikeicfdnddelaghjcihkdgedejeaeoceejdcaalkWafgcPmfdTlgcUi8Qcc~fOgMYilhUhVlhhXdZjdfhcJcUiejmigiucibghbi1hXm1qUqaffiadZihhMcfiphWiihWehhYfdjSjcdkegcDgmbYh~fWgBagejRcViYl3eEkdjiidhmmul6gOVjcgZra ~VJs--eKd~gxgBkdeeufjd~e2f2~gngB~fQf2UgjcNeufXcBgoeidde~fdgA3cfe~fXgA~gqf8LdrdXcLeebbe~fggBjead2ficrfccHbcffiQhidOfchecXeRiddXhfdWfejfbUggi6jUjdgigtfwbqfokJbbgdisiYfgiXbZfihOenl~gygCFfngDmek7e~ggf6Gm~g9gGNgxj~fXf5~fXf-Sh-jGeMcQh~grgE~fRf9chmgaf0hEecgngMf~gkgF-ePhwh~g3f7Bkmgbgrfeh2eTh3fubjgQj6fwcYhlh ~RRrOsafbtYYfdekeWc4dXdmbebjdopsahaaffcoXniorngdfhiagel-dbetcZcmdScsWdbMYUlZeodiaOjUembQXJlOgudoazeUVVdWggecffcZeCkgdtdcemgqbecPdkdYedeidYhidYcieZcWVdRmbfbhjofnRbb1ixbsXxbkcdduhudhcdZibdXmZddqbibacnhnabkjijbhicilkYtgiYmylpmikbsPnnqjefjcggjcghhZfmnahekmi7aojpbeclfhedelfcdkdtckgcagbVepefZjfdbYexefaZclhjjebiigbsnjbfjlicghikebjjfdgjjifcckggbjdeekdZenfedjdZbohYanhkcfcaeraecUgqbcdiffdqdgcbbnhjebbkjkbnglcBWiddd3nbgofibbdhenikchWaelfceidSYQdPV~fAf_WWWeRVSiqceaSWBSidYcqjjl6pppsl6mrbdeieecVbZhXdqcofZZkfiWwZnilcedkeFZfdYgfcTXZieiikdewnicfhmhQfljcgdcUbehbcYggbUbbgfdcffibZVdZVhdbclajfeihbSdghcgebReUafjgcbbieeZXWfhZjjkbdeclUWThndffjbfihcgjnYdhWcgjbWihkcapaddZknZdcchkbVhnbkfkUbogZchacehfdlffcigbbXgkdacldVeaXeifcXdUVYdfddggdXUiSmSfZeledekgblPfVbZZehhXmcpcebliibfgqSrSbcldeYhhgWdhiVbhgdjecJegcnffdcdmbddVkgbbhcdUmbdQgfiecWcigahgcVXcehgZghdXbdXbhicjTZPdNlVecbmlSsMmema0kodhgeimkivylufhZWRifaSekcbhddPZYndjhneyhmdkZjfhWcZfSeiddgWdclVrRigegjcjfunkesbpTemsogmdekmjikeediknfwqkbWbjWaWkXjhgkbswkajiijYrciYygqatjZg3gVdhbggibhhjbginabXbfidqhtWibdWikjenZfYhkqcgiteieebjjobnYgchhgahhidkLmbgaRSYSYdnfpmkUqicVjnojejijmgyXhchhjdhbcdjgfdcXkmfcnjyaufuXsTwcmNfVaTKKXQcddjdddXhIcNaZeSTPfXYccZVedifcRefdWaRbSTafidcYgWdRWXTMUXeinimqfgbecjfXYZYOQPYdSfVjZfZnimekcNsUdamafZXUYcCZThhZcQTcQjgSlclihZbdajadmcVZfYcbfcScYXgcmZodgbbdjeOUbVbebicdldadaZiabekelZXgPZdVceUkkhgclmUcdbZijjrhTgbZaikiWeckkepihcedhgflYhlcWdYiigfiWhcjjfginagjccdhhgZilhcjkfchhjcadggnigafekrecjacailgbhihejYgfhadgdchnkdioghjfYbejfijeXhmejnfajmkZjhoiifmjeejcgkjScbmnyaykgp0m3d0jpdmo5h6dikxc-Uq~fcgTXnamhkR0T6TxUmhkbogkrpilekebegccYkhienlkdhklelrjejjhflnimrbihkdniidnVuiiiccjceZkbgUXkYXccmdcbkVhddbldfhccgemQpibddaidjgnLxjfdkVdCnB2jcWjeeheOa~fVgPUnQiakVkZmdjjhdhimbkdlLyifagckhfWjghbeejiidhTnflZgZkVucrXjUiiOwNhZnUheeihdoNfZidghoXecacbmOrfnclZjdibdRpmhhddhikOt~fugjWjeiKlekTrglZieigiicdkngWfecahghXmeoZliqbsjog4nfWghjdhigcfZtycgdbalkeZbdjfjoajhjYiiibegjccbgehjfcffkdbZhbjhkdbVfcgkgZffjZdZiijmgVddhgkjhmcajhiUVcjkibehkceXmihpbXiegihaeZaYjijjgXhnqdgdafnfZaZakigcnUaehljZhZmYgejkfbhigXhgjccahYpedjVXhejhgbgfdXhoaac~fggNikhbihbhVcVhfhEeXihjacYghhWfhgdiifPdgiXbiecdlfbaVgdcegTYXfdhojWfkkfjpiseVinicfLaWYaficVbabndfdXZJXdbNZdeiedeEYcfigcgZaagedbgdcfivntedhhivkjknhdhgjjgchkihjRacijgYfdZYkYhOajhgibfhkZmkjXbgcSdQmljkeedjhidihagifQfhhbhcdZljfcgkgehkjjfhhdefijgfhqdpkthggdkaglhfhWfWbaigcBhXlmgMj~gkgJofcfebie6gWhZjggnbtedhQghiNgZkEnjfhk6ivqxihcghjfYgjhxgtkocadgenipcyfdemeee5f~gvf7tg~hPfyZjtjghkdcd~gjgIqgAWYaiedgmfeioimggcokricdifrkaghh4Tifdhljdfjhkadcnfkjof~gxf31fpaUccdie5e3i0YadrYblkeXo1nGabhji0iwXpfrb~gigAkgdiqaiiVfakogtdccmhbYpaVgladilfgjbjhi0lajYdkidhogEjbkljafejjikehhagmilg ~UgqmUhrfgd ~T1p7jcbeZi ~TMp2ecWaYfdhkk ~TlpwhdbZZhik ~PqsDZgWknenc ~RFsK3ebdGfdh ~R-sFTfdipfkd ~RZruecWeKjljqhpd ~O2sTjded~fagA3j ~PjrZPltiodfc ~QYrjnd0ggeZdieUbnfkblgfccehaVdYigaVfRnKkkjobrhbimfOipeaj ~SvqNjh4WibddqgkcYcIlSXXdblReokeklrlf ~ULqrleeYQcaifjki ~Tlrh2dqZ~fbf_bjZgfj ~Qvr9hbbckegcZfhdbfgdIfdhjfZhui~fcf_miqeXhhhagihyZdhlfSjyfegig ~P2sZnbohwbjedcncVdUj~fbgCehsebglgXgigcgYdhhWghh ~RpsrsateicmebhggnfgdceodccwflcFZcgghdfccidYggdddTjkb~fggCngRgchjfVh8j~faf_ZhshQfWj4gKgogYhigzePh1iWh ~RRsBqecb1indWf0dKe0bcdmeih5c0jwf4bheWcpeWfheddPeVgZiheddWe~fYgAgidfUdShZeWlijegWlJeYhigTgkgbhpg ~Q-sRsebdjeKcYingUgck ~OvsNofScneZcOfXgei ~N8sGYckdafjdUdddXggjWchebcZhedhebeaebjPcah~gmgM2fdhkf ~PFr5lecdngidhiqegdaZUdOh~fbf5Ni~gggGFddhjgafaefdTeMi4jKe1iOgkhtfVgnh2cvYzfhhVhkhWiujieeekb ~Rcrm7bOVKfmcaaTfbofnofbhgg ~Qyq40XScDjehphfikedi ~OHrWwjucZcheujaimfrblWjekibhaphhueqbpTeaoa4ahcSfbdXgjdecoijcUbJgghUgZhYbKc~fcf-aiejDhYm~g4gCJj~faf_Yj9kFecgkhSgghmidhxl2hhc ~NTrl1g0Y~fbf3UbbYGbWlNinlfhjgdhpmWk~gggC ~RPr1bhjghd ~Trozcbficcceiiadklfchj ~Toqwdgmkke ~S7qSjdXhbi ~Seqlbjihie ~QCr4UdigRhwh ~Pwr-pdRedi ~OOsKThmgmc ~PvruXgnikd ~XVoDadhcVRlkfdmgZboedbojgdnffdZckebcqhWZifcdhdnkcZjigcbXaefkZdjkbkcaSaegqmXdafhiWdGffiplWgkfikjedjjgehospl ~RFq4fdchddgh ~kArHkeafcg ~ivq4kefcTe ~jBq9ieXbYflhjj ~iequmhabOdqjgjkigecd ~iYqxheddXg ~Tpr3Zfmhhf ~dQseQgqhke ~dGr4ajfije ~dMrylbQgfh ~bUtE~gqf9~fCf9~hFgClc7dRb~e8f-~gwf_ncrixghdecMX~gjgI0dtjyf7cAaieceIdodZeCfXcgdmefbjeKageYWnhtdTehd0egb~fVf-qbvdkZecEerfhcdegeojmYNdWghidgcaycdcOdMkadXimbSdTgndUe~gjgD0acXNjakKcyhhcackg5YacmgiVWffjcaZgYgZlGjsegcVdOfjeedVc4gVbheyj~ggf8PcheZfJW~fTf6SigbWcQSZeYgicJadgmlWgjecbbgicLekcRcoaZcXgpdfbXZXgldccVfmeebhcadieYUWgmdgcWeiedeaghjbcXhlkZcZhglVbSfjhZfWleilhXefhYikkZdUnfjrhRfpkmceiWkibZfZZZqtkQcZggjcf1oHYhjpiSgejsjycZhhgSfRckmvejhJfjiyfihbegjngXfnnLgJlwg0bUlnfLhgiqhPeihZjfhdejbadfdPgikkiXdihcgmghiVgjiXiihbiVfojIojgch~fQgH~fbf-hdQgTitiPfdghhWdZi-iwegiAeUhjgTfQjqj~g7gGpnlgFfbghh4luedhhgveiieinh~gmf7El~gwgEndgalhfj0btfRkog~g1f5jmSh~gqgB~fRgBbgig~gggCwdoh1cihXhpg ~XGWGhdYgQYhcYgedbhUZZfgdaeicackdrhbbbhbcWhgaYjafcbidWgcbheYeeYnfYdkeddqdehigpgXcjedduUbcoeabmficVanghdSdvefcZdnegcjfecXfUhjbndVcneXdpgdcTgibadXifdYemdUeod~e8f0~e6gBfduZ7cMa~e8gE~gqf6acHe~fdgIlbafgd6Wmh~gof_hdZcAe~ghf_sX0f2iob~gqf7~ggf_~fgf_udLejcne~gsgCJcnamfbcheye~glgK~gzgF~gsgBicacugsg5q2ivdyj~g6gF~g7gC~fBgEYk~fcgALifi0q~g0gK~gugG~g8gEbhsnwfqkPfigZhghnitfhgciqewjklUhchvdnkchqclaohemygidab~gygAlb3m~g6gGneli5Zrlcgkfmd5hicteoihedbjdwglkmdedmepjnawe~g9gKjjbmohmfbbnfnZ3fqast7m~gigFehignecdjemfhchkliYh0dcn~gigFvewahedeWgjcYcjetiwa~hnf9jYadgaYdicedWgWazebZWbUQbdndmhfijirgwnknpjfiki2fkiwjro~grgGrk~hMgG~hJf_uhkjsg~hEf2qjij1i4VPbfd6jzduhUb~gxgIneqinenZofngkkoi7gpbpjrcmg~g2f5pgodZXzinbfcie~gmgAjbxelhhjvY~grf7vSnddlmglc~grf-lbzbhhkaWdfcifedNhtccbIfYhraNdheXddkcfhadelZLhXbdbQesdlcbbjccalfmYldbclenivYHgLcWjddkcUfbdgdZdiebdmeLbzfedieaejedb-XIb~gigB8ZpeWejd~h3f2~gAfI~D4gA~D4gA~gAg4~jrf4Viog~ergEsgWgli~fbgB~fAgK~hWf8rc~gygA~hAgLOkmhBjkg~hUgDGk2iehhg~exgLbgifyiBgVhdhkm~gggA~gzf5uiaheh6bkfdhigagjgdiVhCgti8cWj6j6echui-fjjng~g4f-~hTgC~gggD-ellqdcckeZedb3heklgpcTY~gwf_~gjgCtfmc1ghgegNhkhehTfbkTh~gogC~fYgDakigmefd~gqgAxc~g3gA0llebche5f~gkf5ohgkodcihhvZyfec~hNgGvjomYldnVssfjhbilmchjjXgfjkhgbjfflmgfikinfeinhchiimefhuimk~gjgJ ~79rEdisjfa ~i0pRlgccKamededSaWSeacfbSfgialifeghhOxeligZgdlbXZggeQWQfUkfjnfagkjTcfjphagjijhfdkiXdUYgkkfZikiaeejxghelhdhedLechihbjxfRfdiuhafihwgRfojpcbjjgdhhgqfidtjdgigcfUaaiyodghhrhhgaecholdgrhWegjnhcgjhsgVglilcghagghafrjicejtgUgvmhildchqiebmkdZlhejteZjshmbfhsnqeXXunhfeaojdhnfieadjfealm0aZcQfnegcxfkipcXfhdqebclh1e~gzfxjadbUaRd~fWgFPkVgxXcesccZlV3ZmiehXgZjij8ZlhZkfi3opeobioZjjpWj5dnYTfZbvZrhhlogfh~gggGjeigbgujmfYegaZevekjwfzjiccclfhipiYlmh~ghf9~grf0lmZfWlYfjqZggidfwlqs1erddYYanadYgSpaacfbSXbfgcXdcgigOgpb0ewmpnblhjkgtgmafYwdShgjigclOiJfghcjmnTnljsigjcindgcbchcdcje~ghf9Flbi1fXiqhof2YtfedYdeYfdjkjfcYjeljalilEnehghbihj~g_gDUaocXjwiPkrgRhvibi~hHgHTfjh2fkfbdnf1iqdcdiiWj6eYhgj9m0cMc~ggf-Vb~gvgCucgclhibifccUhrcXa~fIfyJX~g5gJUflisfbfhdmeohjcdeidbaldahmkbhlg~gsgAjebfectd6eqichghqh0aqhtbadmdWdoefcPirZigidYfpZrblhqppa3hxajhbgihxecjcgnhVfegzici~g3f7Nd2gYbghbgfcYfgd0l1ekcVdvdacugkccfmd~gigD7drbeYqdjYbbmjekwi~gkf-qhjbpdicofkibkbfik7c5g~gpf3~gAfZQaPkZemfheeeVhPcvhidceshiakgkZddnbibaaKkhd~fVf1abNYdbTlLdWaglSbecShOMjbihkebZfbkefaaedgjicfZbbZjYLZcbhYQefZbZRX~f1gqjunlgkth~gmgZvjegjidhjnrgViUedVYgJUhjZfko~fgf-DMdcoehdNfZcQfdhqhFkXcheceJhacbhBdNWbaOXVWHTfdleofeXkfejlgbdkdabmgkjcaifhnqfvVdcbgkcdbjdVRgYaO~fSfSIUWhfjbdghdfZYagfbWZeXKUdZoaqPhTbYYeedYgfccgeceiYadjigcjkmcncgihkeboXhbcbhhhafolbghmXgdjPbPWehmkagppakZeYYUbbZTeeYrbgYidkgplncqebZbhUbdabggdUTqalPpWRiadmgrUOYqgnbZbkfebafiedbgcafbcZSagiaXdkefZbfgdcfcZWeicYZafbYNebabgbmddhYbfabdhecbgcdTcdbibddbfdlhlbhbcakecYeZZaggcXXbWoUed3IlDdfgZcYOWcieccghdcfidddaikZdfZjjZUXcfhuYjYggidhcdelamWkXfgmbhZdfTXMgVkflKqcwPiZeNlZhWdhacJvfjZmZ3RybeelktdefljpcffubneccrdqglceaoeYbddigbWYejeccffjdcflaajvZwebbkidhhckbhddfkcdejfcbkbvbkZccpceiddahbbZfjcegjbYekeZcjfbbeekfbaegkciicccVZgadbZbVefdhfSSOTeaVccaYedZhPdghdZKgVafbYkbVecYZcWncpR6ayUzb0gjdghhckhocnkiZegkhfZgdaicccVaagQuriikXcWibkjiZcfiZfboagcmObZhEcWiEiagZsZfQZWhToWiQ2adZkdaXfgbbdjfmOsVeZmTiqihhcgXcXnczh21fRhalZvbpTSMchcbeTVdbXWdbXVfQabcfaCUZaYeTaUdYaUdbgclcvdigsaoZlWxUlblcogmZqVlbpM6ZgjuXNVnYseciYnVkSrKlZcehWrWjWhIqYoFibgjiapb1JebXamgqUleojnenk6imkkdcRjfaeeW~fkfPMLHPIDUYUKbRmWdafWjPoYdIjNVPITUTQVcgmEhifdeMbaJWdbhchheYaOUWSMKNSZXfdcBfFXTjficdegfkaojienQ6Rvcqa0fx~flgsf1n3qsgpX0jlU2nhZechbrL0ifagZqkcbibmhejigmjchhYjiffkdfjngrcmgiYfekcecjfcTgdceigcXeZkekghcfigbfYmWghhHabcZfIVTihfdiecLgJXXh~fegZXifjbfbljhcfgiZlfjYidlchedeicgfiigbhjhXdWmjgbffnjephVebkhgWnookxfpboinYoddhpkmkrpojuokmrsjtqkmeslrmmvmpxlgfcmbvhhcof~gggO4jucrktdxjgdjghaljgdZZlUVVhamehbqcpfyakV0aqZmgjjgjdlhjumuchbvdiavf2Yznnehddhedndsglju8dxjkXdYhVZWdPnZgdZYeYkQfmiWfhhbkgiWigiicjhchhhcjhhXfgkkj2fdghgnhYgfi1e0ovgibnfibzbphoeqjjlbmEvKoihmfillgYkmgegohei~fef5YagibdhakbqgdcWfPYbhgkUirkehNhhgbhpfZfdlgZUfZYZdfWZfehcQaedYbdmWobedQfSWlkYfVjSckZZhhcaiiccfalcefamXbghcaetXfbaiaekaXgkUajccckdccjgiZkmjqchhYhTebligXibmaihuVlPlmeXkWgXmigWpcfbabmigdhSbhbccharZjWkamcpfcb5SdbbkVhbXlcgbZdaWagloaqYhdkaehgagcjZfQqagZlcoRkESLkXbcbhWGUheTTgbjcYadYWdaZIeTYXlhiYjKcgthfafeikjcbbgnzdphkaoulld~gzf9kijqefgnlaYmhfelVlfijfFlbhjhcgjfahuikcshaplfhcufcgghrjjn3kXgofcghfdinpmjsgjefjjfocgkrcTmjhcielahgppgeiccagiingrkcUldZdYYeakcedqeebkerljevXXkld~glgJmebfjclflkmhjkaZledwmpogpYnigqYfcnzj3dhjphpebiUheiLcghXcDahhchbdgjThhpapljdhnghiqjpnnhekYjJfecWchdacjcYZJYcdheZfgcZehceabehWmepX";
   function d2(a, b) { return AL.indexOf(a) * 64 + AL.indexOf(b) - 2048; }
   function dec(str) {
     var pts = [], x = 0, y = 0, i = 0, first = true, c, dx, dy;
@@ -192,243 +204,284 @@
     }
     return pts;
   }
-  var SRC = DATA.split(' ').map(dec);
 
-  var cv = document.getElementById('map');
+  var D2R = Math.PI / 180, TAU = Math.PI * 2;
+  var TILT = 20 * D2R;                 // how far the north pole leans toward the viewer
+  var SPEED = 0.10;                    // radians per second, about one turn a minute
+
+  function makeLine(lons, lats, closed) {
+    var n = lons.length, o = { n: n, closed: closed, lon: new Float32Array(n), cl: new Float32Array(n), sl: new Float32Array(n),
+      X: new Float32Array(n), Y: new Float32Array(n), Z: new Float32Array(n) }, i;
+    for (i = 0; i < n; i++) {
+      o.lon[i] = lons[i] * D2R;
+      o.cl[i] = Math.cos(lats[i] * D2R);
+      o.sl[i] = Math.sin(lats[i] * D2R);
+    }
+    return o;
+  }
+
+  var rawRings = DATA.split(' ').map(dec);
+  var coast = rawRings.map(function (p) {
+    var lo = [], la = [], n = p.length, i, a, b, o;
+    p.forEach(function (q) { lo.push(q[0] / 10); la.push(q[1] / 10); });
+    o = makeLine(lo, la, true);
+    o.brk = new Uint8Array(n);   // edges that only trace the map seam or the pole are not drawn
+    for (i = 0; i < n; i++) {
+      a = p[i]; b = p[(i + 1) % n];
+      if ((Math.abs(a[0]) >= 1799 && Math.abs(b[0]) >= 1799) || (a[1] <= -899 && b[1] <= -899)) o.brk[i] = 1;
+    }
+    return o;
+  });
+
+  /* faint graticule: a line every 20 degrees */
+  var LATS = [-60, -40, -20, 0, 20, 40, 60], grat = [], i, k, lo, la;
+  for (i = 0; i < 18; i++) {
+    lo = []; la = [];
+    for (k = -80; k <= 80; k += 5) { lo.push(i * 20 - 180); la.push(k); }
+    grat.push(makeLine(lo, la, false));
+  }
+  LATS.forEach(function (lat) {
+    lo = []; la = [];
+    for (k = 0; k <= 360; k += 5) { lo.push(k - 180); la.push(lat); }
+    grat.push(makeLine(lo, la, false));
+  });
+
+  /* land mask: paint the coastlines once, then ask whether a point is land */
+  var MW = 1440, MH = 720, mask = new Uint8Array(MW * MH);
+  (function () {
+    var c = document.createElement('canvas'), x, d, m;
+    c.width = MW; c.height = MH;
+    x = c.getContext('2d');
+    x.fillStyle = '#fff';
+    x.beginPath();
+    rawRings.forEach(function (r) {
+      r.forEach(function (p, n) {
+        var px = (p[0] / 10 + 180) * 4, py = (90 - p[1] / 10) * 4;
+        if (n) x.lineTo(px, py); else x.moveTo(px, py);
+      });
+      x.closePath();
+    });
+    x.fill();
+    // the Caspian Sea is a hole in the land outline, so clear it
+    x.globalCompositeOperation = 'destination-out';
+    x.beginPath();
+    [[46.8, 44.6], [47.6, 45.6], [49.2, 46.6], [51.0, 47.0], [53.0, 46.8], [53.2, 45.4], [51.4, 44.8], [50.6, 44.6], [51.0, 43.0],
+     [52.7, 41.6], [53.0, 40.2], [53.8, 39.2], [53.9, 37.4], [53.0, 36.8], [50.8, 36.9], [49.4, 37.5], [49.0, 38.6], [49.4, 40.2],
+     [50.6, 40.4], [49.6, 41.0], [48.8, 41.8], [47.6, 43.0], [47.2, 44.0]].forEach(function (p, n) {
+      var px = (p[0] + 180) * 4, py = (90 - p[1]) * 4;
+      if (n) x.lineTo(px, py); else x.moveTo(px, py);
+    });
+    x.closePath();
+    x.fill();
+    d = x.getImageData(0, 0, MW, MH).data;
+    for (m = 0; m < MW * MH; m++) mask[m] = d[m * 4 + 3] > 127 ? 1 : 0;
+  })();
+  function isLand(lon, lat) {
+    var l = ((lon + 180) % 360 + 360) % 360, xi = Math.min(MW - 1, Math.floor(l * 4)), yi = Math.max(0, Math.min(MH - 1, Math.floor((90 - lat) * 4)));
+    return mask[yi * MW + xi] === 1;
+  }
+
+  /* the grid: nodes only on land, joined to near neighbours across land */
+  var nodes = [], edges = [], STEP = 6.5;
+  (function () {
+    var lat, row = 0, nl, kk, lon, jl, n, m, a, b, dot, cmin = Math.cos(STEP * 1.5 * D2R), dl, t, ok, len, keep = [];
+    for (lat = -80; lat <= 82; lat += STEP * 0.87, row++) {
+      nl = Math.max(1, Math.round(360 * Math.cos(lat * D2R) / STEP));
+      for (kk = 0; kk < nl; kk++) {
+        lon = -180 + (kk + (row % 2 ? 0.5 : 0)) * 360 / nl + (Math.random() - 0.5) * 0.5 * 360 / nl;
+        jl = lat + (Math.random() - 0.5) * 2;
+        if (!isLand(lon, jl)) continue;
+        n = { lon: lon * D2R, lat: jl * D2R, adj: [], flash: 0, sx: 0, sy: 0, z: -1 };
+        n.u = [Math.cos(n.lat) * Math.cos(n.lon), Math.cos(n.lat) * Math.sin(n.lon), Math.sin(n.lat)];
+        nodes.push(n);
+      }
+    }
+    for (n = 0; n < nodes.length; n++) {
+      for (m = n + 1; m < nodes.length; m++) {
+        a = nodes[n]; b = nodes[m];
+        dot = a.u[0] * b.u[0] + a.u[1] * b.u[1] + a.u[2] * b.u[2];
+        if (dot < cmin) continue;
+        dl = ((b.lon - a.lon + 3 * Math.PI) % TAU) - Math.PI;
+        ok = true;
+        for (t = 0.25; t < 1; t += 0.25) {
+          if (!isLand((a.lon + dl * t) / D2R, (a.lat + (b.lat - a.lat) * t) / D2R)) { ok = false; break; }
+        }
+        if (!ok) continue;
+        len = Math.acos(Math.min(1, dot)) / D2R;
+        a.adj.push({ n: b, dlon: dl, dlat: b.lat - a.lat, len: len });
+        b.adj.push({ n: a, dlon: -dl, dlat: a.lat - b.lat, len: len });
+        edges.push([a, b]);
+      }
+    }
+    nodes = nodes.filter(function (q) { return q.adj.length > 0; });
+  })();
+
+  var cv = document.getElementById('globe');
   var ctx = cv.getContext('2d');
-  var bg = document.getElementById('still'); var bs = 1;
+  var bg = document.getElementById('still');
   var bctx = bg.getContext('2d');
   var stage = document.querySelector('.stage');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var TAU = Math.PI * 2;
-  var w = 0, h = 0, dpr = 1, s = 1;
-  var rings = [], infos = [], nodes = [], inner = [], runners = [], arcs = [], pulses = [];
-  var nextArc = 0, last = 0;
+  var w = 0, h = 0, dpr = 1, s = 1, bs = 1, R = 300, C = 400;
+  var rot = -20 * D2R, sph = Math.sin(TILT), cph = Math.cos(TILT);
+  var runners = [], arcs = [], nextArc = 0, last = 0;
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
 
-  function inside(x, y) {
-    var k, r, n, i, j, a, b, c;
-    for (k = 0; k < rings.length; k++) {
-      r = rings[k]; n = r.length; c = false;
-      for (i = 0, j = n - 1; i < n; j = i++) {
-        a = r[i]; b = r[j];
-        if (((a[1] > y) !== (b[1] > y)) && (x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0])) c = !c;
-      }
-      if (c) return true;
-    }
-    return false;
-  }
-
-  function trace(c) {
-    c.beginPath();
-    rings.forEach(function (r) {
-      c.moveTo(r[0][0], r[0][1]);
-      for (var i = 1; i < r.length; i++) c.lineTo(r[i][0], r[i][1]);
-      c.closePath();
-    });
-  }
-
-  /* ---------- build: fit the map, draw the still layer, set up the grid ---------- */
   function build() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     w = window.innerWidth;
     h = window.innerHeight;
     s = Math.max(0.8, Math.min(2.4, Math.min(w, h) / 800));
-    bs = Math.min(dpr, 1400 / w);
-    bg.width = Math.round(w * dpr); bg.height = Math.round(h * dpr);
-    cv.width = Math.round(w * bs); cv.height = Math.round(h * bs);
-    ctx.setTransform(bs, 0, 0, bs, 0, 0);
-    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    // centre the map on the heading
     var st = stage.getBoundingClientRect();
-    var cx = st.left + st.width / 2, cy = st.top + st.height / 2;
-    var sc = Math.min(0.88 * w / 2000, 0.6 * h / 844);
-    var ox = cx - 1000 * sc, oy = cy - 422 * sc;
-    rings = SRC.map(function (r) { return r.map(function (p) { return [ox + p[0] * sc, oy + p[1] * sc]; }); });
-
-    var minx = 1e9, maxx = -1e9, miny = 1e9, maxy = -1e9;
-    rings.forEach(function (r) { r.forEach(function (p) {
-      if (p[0] < minx) minx = p[0]; if (p[0] > maxx) maxx = p[0];
-      if (p[1] < miny) miny = p[1]; if (p[1] > maxy) maxy = p[1];
-    }); });
-
-    // grid inside the border
-    var gap = 66 * s, cells = [], r, c, x, y, n;
-    var cols = Math.ceil((maxx - minx) / gap) + 1, rowsN = Math.ceil((maxy - miny) / gap) + 1;
-    nodes = []; inner = [];
-    for (r = 0; r < rowsN; r++) {
-      cells[r] = [];
-      for (c = 0; c < cols; c++) {
-        x = minx + c * gap + rnd(-0.2, 0.2) * gap;
-        y = miny + r * gap + rnd(-0.2, 0.2) * gap;
-        if (inside(x, y)) { n = { id: nodes.length, x: x, y: y, adj: [], flash: 0 }; cells[r][c] = n; nodes.push(n); }
-        else cells[r][c] = null;
-      }
-    }
-    function link(a, b) { if (a && b) { a.adj.push(b); b.adj.push(a); } }
-    for (r = 0; r < rowsN; r++) {
-      for (c = 0; c < cols; c++) {
-        n = cells[r][c];
-        if (!n) continue;
-        if (c + 1 < cols && Math.random() < 0.78) link(n, cells[r][c + 1]);
-        if (r + 1 < rowsN && Math.random() < 0.78) link(n, cells[r + 1][c]);
-        if (r + 1 < rowsN && c + 1 < cols && Math.random() < 0.10) link(n, cells[r + 1][c + 1]);
-        if (r + 1 < rowsN && c > 0 && Math.random() < 0.10) link(n, cells[r + 1][c - 1]);
-      }
-    }
-    nodes.forEach(function (a) { if (a.adj.length) inner.push(a); });
-
-    // still layer: faint grid, inner rim, neon border
-    bctx.clearRect(0, 0, w, h);
-    bctx.lineJoin = 'round';
-    bctx.lineCap = 'round';
-
-    bctx.save();
-    trace(bctx); bctx.clip();
-    bctx.lineWidth = Math.max(1, 0.9 * s);
-    bctx.strokeStyle = 'rgba(80,185,255,0.10)';
-    bctx.beginPath();
-    nodes.forEach(function (a) { a.adj.forEach(function (b) { if (a.id < b.id) { bctx.moveTo(a.x, a.y); bctx.lineTo(b.x, b.y); } }); });
-    bctx.stroke();
-    nodes.forEach(function (a) {
-      if (a.adj.length < 3) return;
-      bctx.beginPath(); bctx.arc(a.x, a.y, 2.4 * s, 0, TAU);
-      bctx.strokeStyle = 'rgba(110,205,255,0.22)'; bctx.stroke();
+    var cx0 = st.left + st.width / 2, cy0 = st.top + st.height / 2;
+    R = Math.min(w * 0.44, h * 0.37);
+    var pad = 70 * s, side = Math.ceil(2 * R + 2 * pad);
+    C = side / 2;
+    [cv, bg].forEach(function (c) {
+      c.style.width = side + 'px';
+      c.style.height = side + 'px';
+      c.style.left = Math.round(cx0 - side / 2) + 'px';
+      c.style.top = Math.round(cy0 - side / 2) + 'px';
     });
-    trace(bctx);
+    var bsStill = Math.min(dpr, Math.sqrt(4e6) / side);
+    bs = Math.min(dpr, Math.sqrt(2.4e6) / side);
+    bg.width = Math.round(side * bsStill); bg.height = Math.round(side * bsStill);
+    cv.width = Math.round(side * bs); cv.height = Math.round(side * bs);
+    ctx.setTransform(bs, 0, 0, bs, 0, 0);
+    bctx.setTransform(bsStill, 0, 0, bsStill, 0, 0);
+
+    /* still layer: faint body, inner rim light, neon outline */
+    bctx.clearRect(0, 0, side, side);
+    var g = bctx.createRadialGradient(C - 0.28 * R, C - 0.32 * R, 0.1 * R, C, C, R);
+    g.addColorStop(0, 'rgba(40,110,220,0.10)');
+    g.addColorStop(0.7, 'rgba(20,70,170,0.05)');
+    g.addColorStop(1, 'rgba(60,150,255,0.16)');
+    bctx.fillStyle = g;
+    bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.fill();
+    bctx.save();
+    bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.clip();
     [[46, 0.035], [26, 0.05], [13, 0.07]].forEach(function (q) {
-      bctx.lineWidth = q[0] * s; bctx.strokeStyle = 'rgba(40,120,255,' + q[1] + ')'; bctx.stroke();
+      bctx.lineWidth = q[0] * s; bctx.strokeStyle = 'rgba(40,120,255,' + q[1] + ')';
+      bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.stroke();
     });
     bctx.restore();
-
     bctx.globalCompositeOperation = 'lighter';
-    trace(bctx);
     [[34, 0.035], [20, 0.055], [11, 0.10], [5.5, 0.18]].forEach(function (q) {
-      bctx.lineWidth = q[0] * s; bctx.strokeStyle = 'rgba(50,150,255,' + q[1] + ')'; bctx.stroke();
+      bctx.lineWidth = q[0] * s; bctx.strokeStyle = 'rgba(50,150,255,' + q[1] + ')';
+      bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.stroke();
     });
-    bctx.lineWidth = 2.2 * s; bctx.strokeStyle = 'rgba(110,210,255,0.85)'; bctx.stroke();
-    bctx.lineWidth = 0.9 * s; bctx.strokeStyle = 'rgba(235,250,255,0.95)'; bctx.stroke();
+    bctx.lineWidth = 2.2 * s; bctx.strokeStyle = 'rgba(110,210,255,0.85)';
+    bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.stroke();
+    bctx.lineWidth = 0.9 * s; bctx.strokeStyle = 'rgba(235,250,255,0.95)';
+    bctx.beginPath(); bctx.arc(C, C, R, 0, TAU); bctx.stroke();
     bctx.globalCompositeOperation = 'source-over';
 
-    // current travelling around the border
-    infos = rings.slice(0, 2).map(function (pts) {
-      var cum = [0], t = 0, i, a, b;
-      for (i = 0; i < pts.length; i++) {
-        a = pts[i]; b = pts[(i + 1) % pts.length];
-        t += Math.sqrt((b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]));
-        cum.push(t);
-      }
-      return { pts: pts, cum: cum, total: t };
-    });
-    pulses = [];
-    [].forEach(function (cfg) {
-      var info = infos[cfg[0]], k;
-      if (!info) return;
-      for (k = 0; k < cfg[1]; k++) {
-        pulses.push({ info: info, d: info.total * (k / cfg[1]) + rnd(0, info.total * 0.1), v: rnd(1.5, 2.8) * s, len: Math.min(rnd(120, 220) * s, info.total * 0.3) });
-      }
-    });
-
-    runners = [];
-    arcs = [];
+    runners = []; arcs = [];
     nextArc = performance.now() + 4200;
-    
+    if (reduce) draw(0);
   }
 
-  function pointAt(info, d) {
-    var cum = info.cum, t = info.total, lo = 0, hi = cum.length - 1, m, a, b, f;
-    d = ((d % t) + t) % t;
-    while (hi - lo > 1) { m = (lo + hi) >> 1; if (cum[m] <= d) lo = m; else hi = m; }
-    a = info.pts[lo]; b = info.pts[(lo + 1) % info.pts.length];
-    f = (d - cum[lo]) / ((cum[lo + 1] - cum[lo]) || 1);
-    return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
-  }
-
-  function drawPulse(p) {
-    var M = 30, i, f, q, q2, nx, ny, nl, amp, pts = [], a, j, k;
-    for (i = 0; i <= M; i++) {
-      f = i / M;
-      q = pointAt(p.info, p.d - p.len * (1 - f));
-      q2 = pointAt(p.info, p.d - p.len * (1 - f) + 4);
-      nx = -(q2[1] - q[1]); ny = q2[0] - q[0];
-      nl = Math.sqrt(nx * nx + ny * ny) || 1;
-      amp = (Math.random() - 0.5) * 6 * s * (0.25 + 0.75 * f);
-      pts.push([q[0] + nx / nl * amp, q[1] + ny / nl * amp]);
+  /* spin every point to the current view */
+  function spin(o) {
+    var i, dl, cd, sd;
+    for (i = 0; i < o.n; i++) {
+      dl = o.lon[i] - rot; cd = Math.cos(dl); sd = Math.sin(dl);
+      o.X[i] = o.cl[i] * sd;
+      o.Y[i] = cph * o.sl[i] - sph * o.cl[i] * cd;
+      o.Z[i] = sph * o.sl[i] + cph * o.cl[i] * cd;
     }
-    var passes = [[9 * s, 0.10, '70,170,255'], [3.2 * s, 0.40, '120,215,255'], [1.3 * s, 0.95, '240,252,255']];
-    for (i = 0; i < M; i += 2) {
-      j = Math.min(i + 2, M);
-      a = Math.pow((i + j) / 2 / M, 1.5);
-      passes.forEach(function (ps) {
-        ctx.lineWidth = ps[0];
-        ctx.strokeStyle = 'rgba(' + ps[2] + ',' + (ps[1] * a).toFixed(3) + ')';
-        ctx.beginPath(); ctx.moveTo(pts[i][0], pts[i][1]);
-        for (k = i + 1; k <= j; k++) ctx.lineTo(pts[k][0], pts[k][1]);
-        ctx.stroke();
-      });
-    }
-    var hd = pts[M];
-    var g = ctx.createRadialGradient(hd[0], hd[1], 0, hd[0], hd[1], 20 * s);
-    g.addColorStop(0, 'rgba(245,253,255,0.95)');
-    g.addColorStop(0.3, 'rgba(110,205,255,0.45)');
-    g.addColorStop(1, 'rgba(60,150,255,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(hd[0], hd[1], 20 * s, 0, TAU); ctx.fill();
-    return hd;
   }
 
-  /* ---------- current flowing along the grid ---------- */
+  /* add the visible stretches of a line to the current path, cut cleanly at the horizon */
+  function runs(o) {
+    var last = o.closed ? o.n : o.n - 1, i, j, p, pv = false, t, xi, yi, l, X = o.X, Y = o.Y, Z = o.Z;
+    for (i = 0; i <= last; i++) {
+      j = i % o.n;
+      if (i === 0) {
+        if (Z[j] > 0) { ctx.moveTo(C + R * X[j], C - R * Y[j]); pv = true; } else pv = false;
+        continue;
+      }
+      p = (i - 1) % o.n;
+      if (o.brk && o.brk[p]) {
+        if (Z[j] > 0) { ctx.moveTo(C + R * X[j], C - R * Y[j]); pv = true; } else pv = false;
+        continue;
+      }
+      if (Z[j] > 0) {
+        if (!pv) {
+          t = Z[j] / (Z[j] - Z[p]);
+          xi = X[j] + (X[p] - X[j]) * t; yi = Y[j] + (Y[p] - Y[j]) * t;
+          l = Math.sqrt(xi * xi + yi * yi) || 1;
+          ctx.moveTo(C + R * xi / l, C - R * yi / l);
+        }
+        ctx.lineTo(C + R * X[j], C - R * Y[j]);
+        pv = true;
+      } else {
+        if (pv) {
+          t = Z[p] / (Z[p] - Z[j]);
+          xi = X[p] + (X[j] - X[p]) * t; yi = Y[p] + (Y[j] - Y[p]) * t;
+          l = Math.sqrt(xi * xi + yi * yi) || 1;
+          ctx.lineTo(C + R * xi / l, C - R * yi / l);
+        }
+        pv = false;
+      }
+    }
+  }
+
+  function project(lon, lat, out) {
+    var cl = Math.cos(lat), sl = Math.sin(lat), dl = lon - rot, cd = Math.cos(dl);
+    out.x = C + R * cl * Math.sin(dl);
+    out.y = C - R * (cph * sl - sph * cl * cd);
+    out.z = sph * sl + cph * cl * cd;
+    return out;
+  }
+
+  /* ---------- current flowing along the grid lines ---------- */
   function spawn() {
-    if (!inner.length) return;
-    var n = inner[(Math.random() * inner.length) | 0];
-    runners.push({
-      prev: n, to: n.adj[(Math.random() * n.adj.length) | 0],
-      x: n.x, y: n.y, v: rnd(0.9, 2.0) * s, trail: [],
-      max: (28 + Math.random() * 40) | 0, hops: 0, life: (8 + Math.random() * 12) | 0, dead: false
-    });
+    var n = nodes[(Math.random() * nodes.length) | 0], e = n.adj[(Math.random() * n.adj.length) | 0];
+    runners.push({ from: n, edge: e, prev: null, t: 0, v: rnd(8, 16), trail: [],
+      max: (28 + Math.random() * 40) | 0, hops: 0, life: (6 + Math.random() * 10) | 0, dead: false });
   }
-
-  function stepRunner(q, k) {
+  function stepRunner(q, dt) {
     if (q.dead) { q.trail.shift(); return; }
-    var dist = q.v * k, dx, dy, d, from, opts;
-    while (dist > 0) {
-      dx = q.to.x - q.x; dy = q.to.y - q.y;
-      d = Math.sqrt(dx * dx + dy * dy);
-      if (d <= dist) {
-        q.x = q.to.x; q.y = q.to.y; dist -= d;
-        q.to.flash = 1;
-        from = q.prev;
-        opts = q.to.adj.filter(function (m) { return m !== from; });
-        q.hops++;
-        if (!opts.length || q.hops > q.life) { q.dead = true; break; }
-        q.prev = q.to;
-        q.to = opts[(Math.random() * opts.length) | 0];
-      } else { q.x += dx / d * dist; q.y += dy / d * dist; dist = 0; }
+    q.t += q.v * dt / 1000 / q.edge.len;
+    var opts, nxt;
+    while (q.t >= 1) {
+      q.t -= 1;
+      nxt = q.edge.n; nxt.flash = 1;
+      q.hops++;
+      opts = nxt.adj.filter(function (a) { return a.n !== q.from; });
+      if (!opts.length || q.hops > q.life) { q.dead = true; q.t = 0; break; }
+      q.from = nxt;
+      q.edge = opts[(Math.random() * opts.length) | 0];
     }
-    q.trail.push({ x: q.x, y: q.y });
+    q.trail.push([q.from.lon + q.edge.dlon * q.t, q.from.lat + q.edge.dlat * q.t]);
     if (q.trail.length > q.max) q.trail.shift();
   }
-
+  var tmp = { x: 0, y: 0, z: 0 };
   function drawRunner(q) {
-    var t = q.trail, L = t.length, i, j, k, a, g;
-    for (i = 0; i < L - 1; i += 3) {
-      j = Math.min(i + 3, L - 1);
-      a = (i + j) / 2 / L;
+    var t = q.trail, L = t.length, i, a, g, pv = null, cur;
+    ctx.lineCap = 'round';
+    var pts = [];
+    for (i = 0; i < L; i++) {
+      project(t[i][0], t[i][1], tmp);
+      pts.push(tmp.z > 0.02 ? [tmp.x, tmp.y] : null);
+    }
+    for (i = 1; i < L; i++) {
+      if (!pts[i] || !pts[i - 1]) continue;
+      a = i / L;
       ctx.strokeStyle = 'rgba(120,215,255,' + (a * a * 0.9).toFixed(3) + ')';
       ctx.lineWidth = (0.7 + 2.0 * a) * s;
-      ctx.beginPath(); ctx.moveTo(t[i].x, t[i].y);
-      for (k = i + 1; k <= j; k++) ctx.lineTo(t[k].x, t[k].y);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pts[i - 1][0], pts[i - 1][1]); ctx.lineTo(pts[i][0], pts[i][1]); ctx.stroke();
     }
-    if (!q.dead && L) {
-      g = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, 14 * s);
+    cur = pts[L - 1];
+    if (!q.dead && cur) {
+      g = ctx.createRadialGradient(cur[0], cur[1], 0, cur[0], cur[1], 14 * s);
       g.addColorStop(0, 'rgba(240,252,255,0.95)');
       g.addColorStop(0.3, 'rgba(110,210,255,0.45)');
       g.addColorStop(1, 'rgba(60,160,255,0)');
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(q.x, q.y, 14 * s, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(cur[0], cur[1], 14 * s, 0, TAU); ctx.fill();
     }
   }
 
@@ -449,8 +502,7 @@
     }
     return pts;
   }
-
-  function makeArc(a, b, d, sc, life) {
+  function makeArc(a, b, d, life) {
     var main = bolt(a, b, d * 0.30), paths = [main], i, p, ang, len;
     for (i = 0; i < 2; i++) {
       p = main[(main.length * (0.25 + Math.random() * 0.5)) | 0];
@@ -458,43 +510,28 @@
       len = d * rnd(0.2, 0.38);
       paths.push(bolt(p, { x: p.x + Math.cos(ang) * len, y: p.y + Math.sin(ang) * len }, len * 0.3));
     }
-    if (typeof a.flash === 'number') a.flash = 1.4;
-    if (typeof b.flash === 'number') b.flash = 1.4;
-    arcs.push({ paths: paths, age: 0, life: life, sc: sc });
+    a.flash = 1.4; b.flash = 1.4;
+    arcs.push({ paths: paths, age: 0, life: life });
   }
-
   function strike() {
-    if (inner.length < 2) return;
-    var a, b, d, t = 0, fromBorder = Math.random() < 0.4, r, p;
+    var vis = nodes.filter(function (n) { return n.z > 0.3; }), a, b, d, t = 0;
+    if (vis.length < 2) return;
     do {
-      if (fromBorder) { r = rings[0]; p = r[(Math.random() * r.length) | 0]; a = { x: p[0], y: p[1] }; }
-      else a = inner[(Math.random() * inner.length) | 0];
-      b = inner[(Math.random() * inner.length) | 0];
-      d = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+      a = vis[(Math.random() * vis.length) | 0];
+      b = vis[(Math.random() * vis.length) | 0];
+      d = Math.sqrt((a.sx - b.sx) * (a.sx - b.sx) + (a.sy - b.sy) * (a.sy - b.sy));
       t++;
-    } while ((d < 140 * s || d > 440 * s) && t < 100);
-    if (t >= 100) return;
-    makeArc(a, b, d, 1, rnd(260, 420));
-  }
-
-  function spark(hd) {
-    if (!inner.length) return;
-    var b, d, t = 0;
-    do {
-      b = inner[(Math.random() * inner.length) | 0];
-      d = Math.sqrt((hd[0] - b.x) * (hd[0] - b.x) + (hd[1] - b.y) * (hd[1] - b.y));
-      t++;
-    } while ((d < 60 * s || d > 230 * s) && t < 60);
+    } while ((d < 0.2 * R || d > 0.6 * R) && t < 60);
     if (t >= 60) return;
-    makeArc({ x: hd[0], y: hd[1] }, b, d, 0.7, rnd(150, 260));
+    makeArc({ x: a.sx, y: a.sy, flash: 0 }, { x: b.sx, y: b.sy, flash: 0 }, d, rnd(260, 420));
+    a.flash = 1.4; b.flash = 1.4;
   }
-
   function drawArc(arc) {
-    var fade = 1 - arc.age / arc.life, f = fade * (0.55 + 0.45 * Math.random()), sc = arc.sc;
+    var fade = 1 - arc.age / arc.life, f = fade * (0.55 + 0.45 * Math.random());
     var passes = [
-      [7 * s * sc, 'rgba(60,150,255,' + (0.11 * f).toFixed(3) + ')'],
-      [2.6 * s * sc, 'rgba(110,215,255,' + (0.38 * f).toFixed(3) + ')'],
-      [1.1 * s * sc, 'rgba(240,252,255,' + (0.95 * f).toFixed(3) + ')']
+      [7 * s, 'rgba(60,150,255,' + (0.11 * f).toFixed(3) + ')'],
+      [2.6 * s, 'rgba(110,215,255,' + (0.38 * f).toFixed(3) + ')'],
+      [1.1 * s, 'rgba(240,252,255,' + (0.95 * f).toFixed(3) + ')']
     ];
     passes.forEach(function (ps) {
       ctx.lineWidth = ps[0]; ctx.strokeStyle = ps[1];
@@ -508,70 +545,108 @@
     ctx.globalAlpha = 1;
   }
 
-  /* ---------- main loop ---------- */
-  function frame(now) {
-    var dt = last ? Math.min(64, now - last) : 16.7;
-    last = now;
-    var k = dt / 16.667, i, n, g, rr, q, hd;
-
-    ctx.clearRect(0, 0, w, h);
+  /* ---------- one frame ---------- */
+  function draw(dt) {
+    var i, n, g, rr, q, a;
+    ctx.clearRect(0, 0, C * 2, C * 2);
     ctx.globalCompositeOperation = 'lighter';
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
-    var target = Math.max(8, Math.min(26, Math.round(nodes.length / 7)));
-    if (runners.length < target && Math.random() < 0.12 * k) spawn();
-    if (now > nextArc) { strike(); if (Math.random() < 0.3) strike(); nextArc = now + rnd(1800, 4200); }
-
+    // where every node sits this frame
     for (i = 0; i < nodes.length; i++) {
       n = nodes[i];
-      if (n.flash > 0.03) {
+      project(n.lon, n.lat, tmp);
+      n.sx = tmp.x; n.sy = tmp.y; n.z = tmp.z;
+    }
+
+    // faint graticule
+    ctx.beginPath();
+    for (i = 0; i < grat.length; i++) { spin(grat[i]); runs(grat[i]); }
+    ctx.lineWidth = Math.max(1, 0.9 * s);
+    ctx.strokeStyle = 'rgba(80,185,255,0.06)';
+    ctx.stroke();
+
+    // power grid across the land
+    ctx.beginPath();
+    for (i = 0; i < edges.length; i++) {
+      a = edges[i][0]; q = edges[i][1];
+      if (a.z > 0.04 && q.z > 0.04) { ctx.moveTo(a.sx, a.sy); ctx.lineTo(q.sx, q.sy); }
+    }
+    ctx.lineWidth = Math.max(1, 0.9 * s);
+    ctx.strokeStyle = 'rgba(90,195,255,0.15)';
+    ctx.stroke();
+
+    ctx.beginPath();
+    for (i = 0; i < nodes.length; i++) {
+      n = nodes[i];
+      if (n.z > 0.05 && n.adj.length > 2) { ctx.moveTo(n.sx + 1.8 * s, n.sy); ctx.arc(n.sx, n.sy, 1.8 * s, 0, TAU); }
+    }
+    ctx.fillStyle = 'rgba(110,205,255,0.34)';
+    ctx.fill();
+
+    // coastlines
+    ctx.beginPath();
+    for (i = 0; i < coast.length; i++) { spin(coast[i]); runs(coast[i]); }
+    [[8 * s, 'rgba(60,150,255,0.10)'], [3 * s, 'rgba(110,210,255,0.30)'], [1.1 * s, 'rgba(235,250,255,0.92)']].forEach(function (p) {
+      ctx.lineWidth = p[0]; ctx.strokeStyle = p[1]; ctx.stroke();
+    });
+
+    // node flashes
+    for (i = 0; i < nodes.length; i++) {
+      n = nodes[i];
+      if (n.flash > 0.03 && n.z > 0.05) {
         rr = (5 + 11 * n.flash) * s;
-        g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr);
+        g = ctx.createRadialGradient(n.sx, n.sy, 0, n.sx, n.sy, rr);
         g.addColorStop(0, 'rgba(200,240,255,' + Math.min(0.7, 0.6 * n.flash).toFixed(3) + ')');
         g.addColorStop(1, 'rgba(60,160,255,0)');
         ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, TAU); ctx.fill();
-        n.flash *= Math.pow(0.93, k);
+        ctx.beginPath(); ctx.arc(n.sx, n.sy, rr, 0, TAU); ctx.fill();
       }
+      if (n.flash > 0) n.flash *= Math.pow(0.93, dt / 16.667);
     }
 
     for (i = runners.length - 1; i >= 0; i--) {
       q = runners[i];
-      stepRunner(q, k);
+      if (dt) stepRunner(q, dt);
       if (q.dead && !q.trail.length) { runners.splice(i, 1); continue; }
       drawRunner(q);
     }
-
-    for (i = 0; i < pulses.length; i++) {
-      pulses[i].d += pulses[i].v * k;
-      hd = drawPulse(pulses[i]);
-      if (Math.random() < 0.010 * k) spark(hd);
-    }
-
     for (i = arcs.length - 1; i >= 0; i--) {
-      arcs[i].age += dt;
-      if (arcs[i].age >= arcs[i].life) { arcs.splice(i, 1); continue; }
-      drawArc(arcs[i]);
+      a = arcs[i];
+      a.age += dt;
+      if (a.age >= a.life) { arcs.splice(i, 1); continue; }
+      drawArc(a);
     }
-
     ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function frame(now) {
+    var dt = last ? Math.min(64, now - last) : 16.7;
+    last = now;
+    rot -= SPEED * dt / 1000;
+    var target = 14;
+    if (runners.length < target && Math.random() < 0.10 * dt / 16.667) spawn();
+    if (now > nextArc) { strike(); if (Math.random() < 0.3) strike(); nextArc = now + rnd(1800, 4200); }
+    draw(dt);
     requestAnimationFrame(frame);
   }
 
   var timer;
   window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(build, 150); });
   window.addEventListener('pointermove', function (e) {
-    var r = 80 * s, i, n, dx, dy;
+    var r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top, rad = 80 * s, i, n, dx, dy;
     for (i = 0; i < nodes.length; i++) {
-      n = nodes[i]; dx = n.x - e.clientX; dy = n.y - e.clientY;
-      if (dx * dx + dy * dy < r * r) n.flash = Math.max(n.flash, 0.7);
+      n = nodes[i];
+      if (n.z <= 0.05) continue;
+      dx = n.sx - px; dy = n.sy - py;
+      if (dx * dx + dy * dy < rad * rad) n.flash = Math.max(n.flash, 0.7);
     }
   }, { passive: true });
 
   build();
   if (!reduce) requestAnimationFrame(frame);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!reduce) { /* heading metrics settled: re-centre */ } build(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
 })();
 </script>
 </body>
